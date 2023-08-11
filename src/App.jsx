@@ -1,39 +1,60 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React, { useState } from 'react';
 
-function App() {
-  const [count, setCount] = useState(0)
-  const [state, setState] = useState({text : '', name : ''})
-
+function Input({ label, value, onChange }) {
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p>{state.text}</p>
-      <p>{state.name}</p>
-      <label>Full Name</label>
-      {console.log(state)}
-      <input value={state.text} onChange={e => setState({...state,text : e.target.value})} type="text" />
-      <input value={state.name} onChange={e => setState({...state,name :e.target.value})} type="text" />
-    </>
-  )
+    <div>
+      <label>{label}</label>
+      <input value={value} onChange={onChange} type="text" />
+    </div>
+  );
 }
 
-export default App
+function App() {
+  const [state, setState] = useState({
+    firstName: '',
+    secondName: '',
+    telNumber: '',
+    email: '',
+    location: ''
+  });
+
+  const handleInputChange = (fieldName, value) => {
+    setState(prevState => ({
+      ...prevState,
+      [fieldName]: value
+    }));
+  };
+
+  return (
+    <div>
+      <Input
+        label="First Name"
+        value={state.firstName}
+        onChange={e => handleInputChange('firstName', e.target.value)}
+      />
+      <Input
+        label="Last Name"
+        value={state.secondName}
+        onChange={e => handleInputChange('secondName', e.target.value)}
+      />
+      <Input
+        label="Telephone Number"
+        value={state.telNumber}
+        onChange={e => handleInputChange('telNumber', e.target.value)}
+      />
+      <Input
+        label="Email"
+        value={state.email}
+        onChange={e => handleInputChange('email', e.target.value)}
+      />
+      <Input
+        label="Location"
+        value={state.location}
+        onChange={e => handleInputChange('location', e.target.value)}
+      />
+    </div>
+  );
+}
+
+export default App;
+
